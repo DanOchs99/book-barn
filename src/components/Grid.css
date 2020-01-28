@@ -1,0 +1,20 @@
+.bb-grid {
+    display: grid;
+    margin: 2vw;
+    font-family: sans-serif;
+    grid-template-columns: 22.5vw 22.5vw 22.5vw 22.5vw;
+    column-gap: 2vw;
+    row-gap: 2vw;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .bb-grid {
+        display: grid;
+        margin: 2vw;
+        font-family: sans-serif;
+        grid-template-columns: 8vw 8vw 8vw 8vw 8vw 8vw 8vw 8vw 8vw 8vw;
+        column-gap: 20px;
+        row-gap: 20px;
+    }
+}

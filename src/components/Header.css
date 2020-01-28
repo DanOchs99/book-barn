@@ -1,0 +1,15 @@
+.bb-header {
+    display: flex;
+    width: 96vw;
+    margin: 2vw;
+    font-family: sans-serif;
+    background-color: #52A7FA;
+}
+
+#logo {
+    color: white;
+    padding: 0.6em 1em 0.6em 1em;
+    font-weight: normal;
+    font-size: 40px;
+    margin-left: 20px;
+}
