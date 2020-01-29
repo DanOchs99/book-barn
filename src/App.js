@@ -7,7 +7,7 @@ class App extends Component {
         // run the superclass constructor
         super(props);
         // set the initial state here
-        this.state = { allBooks: [], show: "All" }
+        this.state = { allBooks: [], countryDropdown: [], show: "All" }
     }
     
     componentDidMount() {
@@ -19,15 +19,36 @@ class App extends Component {
             for (let i=0; i<json.length; i++) {
                 json[i].imageSrc = `https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/${json[i].imageLink}`
             }
+            // setup the countries filter dropdown list
+            let allCountries = [];
+            for (let i=0; i<json.length; i++) {
+                if (allCountries.filter(country => country==json[i].country).length == 0) {
+                    allCountries.push(json[i].country)
+                }
+            }
+            const sortedCountries = ["All"].concat(allCountries.sort());
+            const allCountryElements = sortedCountries.map((country, index) => {
+                return (
+                    <option key={index}>
+                      {country}
+                    </option>
+                )
+            });
+
             // set the state - initially show all the books
-            this.setState({allBooks: json, show: "All"})
+            this.setState({allBooks: json, countryDropdown: allCountryElements, show: "All"})
         });
+    }
+
+    // arrow function provides access to this.setState
+    onDropdownSelect = (selection) => {
+        this.setState({show: selection});
     }
 
     render() {
         return (
             <>
-              <Header />
+              <Header countryDropdown={this.state.countryDropdown} onDropdownSelect={this.onDropdownSelect} />
               <Grid allBooks={this.state.allBooks} show={this.state.show} />
             </>
         );

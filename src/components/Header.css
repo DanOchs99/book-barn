@@ -13,3 +13,15 @@
     font-size: 40px;
     margin-left: 20px;
 }
+
+#countryDropdown {
+    color: white;
+    background-color: #52A7FA;
+    border-color: white;
+    border-width: 2px;
+    font-size: 18pt;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-left: 40px;
+    align-self: center;
+}
