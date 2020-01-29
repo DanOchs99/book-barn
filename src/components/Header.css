@@ -14,14 +14,21 @@
     margin-left: 20px;
 }
 
-#countryDropdown {
+#menuOverview {
     color: white;
-    background-color: #52A7FA;
-    border-color: white;
-    border-width: 2px;
     font-size: 18pt;
-    font-weight: bolder;
-    margin-top: 10px;
+    font-weight: lighter;
+    margin-top: 35px;
     margin-left: 40px;
-    align-self: center;
+    text-decoration: none;
 }
+
+#menuAdd {
+    color: white;
+    font-size: 18pt;
+    font-weight: lighter;
+    margin-top: 35px;
+    margin-left: 40px;
+    text-decoration: none;
+}
+

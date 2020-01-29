@@ -1,21 +1,12 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom'; 
 import './Header.css';
 
 class Header extends Component {
 
     constructor(props) {
         super(props) 
-        this.state = {
-            show: 'All'
-        }
-    }
-
-    handleDropdownSelect = (e) => {
-      this.setState({
-          show: e.target.value
-      },() => {
-          this.props.onDropdownSelect(this.state.show)
-      })    
+        this.state = { show: 'All' }
     }
 
     render() {
@@ -24,9 +15,12 @@ class Header extends Component {
               <div id="logo">
                 Book Barn
               </div>
-              <select id="countryDropdown" onChange={this.handleDropdownSelect} >
-                {this.props.countryDropdown}
-              </select>
+              <Link id="menuOverview" to="/" >
+                Overview
+              </Link>
+              <Link id="menuAdd" to="/add" >
+                Add
+              </Link>
             </div>
         )
       }
