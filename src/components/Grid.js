@@ -22,11 +22,11 @@ class Grid extends Component {
         // catch the initial render before I load the books
         if (this.props.allBooks.length > 0) {
             let books = []
-            if (this.props.show == "All") {
+            if (this.props.show === "All") {
                 books = this.props.allBooks;
             }
             else {
-                books = this.props.allBooks.filter((book) => book.genre==this.props.show);
+                books = this.props.allBooks.filter((book) => book.genre===this.props.show);
             }
             const bookElements = books.map((book, index) => {
                 return (

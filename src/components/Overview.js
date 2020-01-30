@@ -17,7 +17,7 @@ class App extends Component {
                 // build the dropdown list of genres
                 let allGenres = [];
                 for (let i=0; i<books.length; i++) {
-                    if (allGenres.filter(genre => genre==books[i].genre).length == 0) {
+                    if (allGenres.filter(genre => genre===books[i].genre).length === 0) {
                         allGenres.push(books[i].genre)
                     }
                 }
@@ -42,10 +42,6 @@ class App extends Component {
         this.setState({show: selection});
     }
 
-    //onThumbnailClick = (id) => {
-    //    this.setState({book: id});
-    //}
-
     render() {
         return (
               <Grid allBooks={this.state.allBooks} show={this.state.show} genreDropdown={this.state.genreDropdown} onDropdownSelect={this.onDropdownSelect} />
@@ -54,9 +50,6 @@ class App extends Component {
 }
 
 export default App;
-
-
-// ATTRIBUTE REMOVED FROM Grid render:     onThumbnailClick={this.onThumbnailClick}
 
 /*
 

@@ -23,20 +23,35 @@ class Detail extends Component {
     }
     
     handleClickDelete = () => {
-        console.log(`Delete request for book id: ${this.state.theBook.id}`)
+        console.log(`Detail.js: delete request for book id: ${this.state.theBook.id}`)
+        const detailurl = `http://localhost:8080/delete/${this.state.theBook.id}`
+        fetch(detailurl, {
+            method: 'POST',  
+            body: JSON.stringify({book: this.state.theBook.id }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(() => {
+            this.props.history.push('/');
+        })
+        .catch((error) => console.log(error));
     }
 
     render() {
         return (
-            <div>
-              <h1>This is a detail page.</h1>
-              <p>Book number {this.props.match.params.bookId}</p>
-              <p>{this.state.theBook.title}</p>
-              <p>{this.state.theBook.genre}</p>
-              <p>{this.state.theBook.publisher}</p>
-              <p>{this.state.theBook.year}</p>
-              <p>{this.state.theBook.imageurl}</p>
-              <button onClick={this.handleClickDelete} >Delete Book</button>
+            <div id="grid" className="bb-detail">
+              <div>
+                  <img src={this.state.theBook.imageurl} className="bb-detail-image" />
+              </div>
+              <div className="bb-detail-info">
+                <p>{this.state.theBook.title}</p>
+                <p>{this.state.theBook.genre}</p>
+                <p>{this.state.theBook.publisher}</p>
+                <p>{this.state.theBook.year}</p>
+                <button onClick={this.handleClickDelete} >Delete Book</button>
+                <button onClick={this.handleClickEdit} >Edit Book</button>
+              </div>
             </div>
         );
     }

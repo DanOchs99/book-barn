@@ -1,0 +1,24 @@
+.bb-detail {
+    display: grid;
+    margin: 2vw;
+    font-family: sans-serif;
+    grid-template-columns: 45vw 45vw;
+    column-gap: 6vw;
+}
+
+.bb-detail-image {
+    width: 45vw;
+}
+
+.bb-detail-info {
+    display: flex;
+    flex-direction: column;
+    width: 45vw;
+    font-size: 18px;
+}
+
+button {
+    width: 10vw;
+    margin: 2vw;
+    font-size: 15px;
+}
