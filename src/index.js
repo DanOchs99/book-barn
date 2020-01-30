@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import BaseLayout from './components/BaseLayout'
 import Overview from './components/Overview';
 import Detail from './components/Detail'
+import Edit from './components/Edit'
 
 ReactDOM.render(
     <BrowserRouter>
@@ -13,6 +14,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path = "/"  component = {Overview} />
           <Route path = "/book/:bookId" component = {Detail} />
+          <Route path = "/edit/:bookId" component = {Edit} />
         </Switch>
       </BaseLayout>
     </BrowserRouter>

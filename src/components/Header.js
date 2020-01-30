@@ -18,7 +18,7 @@ class Header extends Component {
               <Link id="menuOverview" to="/" >
                 Overview
               </Link>
-              <Link id="menuAdd" to="/add" >
+              <Link id="menuAdd" to="/edit/0" >
                 Add
               </Link>
             </div>

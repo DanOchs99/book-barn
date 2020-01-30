@@ -23,9 +23,7 @@ class Detail extends Component {
     }
     
     handleClickDelete = () => {
-        console.log(`Detail.js: delete request for book id: ${this.state.theBook.id}`)
-        const detailurl = `http://localhost:8080/delete/${this.state.theBook.id}`
-        fetch(detailurl, {
+        fetch("http://localhost:8080/delete", {
             method: 'POST',  
             body: JSON.stringify({book: this.state.theBook.id }),
             headers: {
@@ -38,11 +36,16 @@ class Detail extends Component {
         .catch((error) => console.log(error));
     }
 
+    handleClickEdit = () => {
+        const editurl = `/edit/${this.state.theBook.id}`
+        this.props.history.push(editurl);
+    }
+
     render() {
         return (
             <div id="grid" className="bb-detail">
               <div>
-                  <img src={this.state.theBook.imageurl} className="bb-detail-image" />
+                  <img src={this.state.theBook.imageurl} alt={this.state.theBook.title} className="bb-detail-image" />
               </div>
               <div className="bb-detail-info">
                 <p>{this.state.theBook.title}</p>
