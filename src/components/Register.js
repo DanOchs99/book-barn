@@ -5,6 +5,7 @@ import './Register.css';
 
 const Register = (props) => {
     const [user, setUser] = useState({})
+    const [status, setStatus] = useState('')
 
     const handleChange = (e) => {
         setUser ({
@@ -23,9 +24,16 @@ const Register = (props) => {
                     "Content-Type": "application/json"
                 }
             })
-            .then((response) => { response.json()
-                .then((json) => { sessionStorage.setItem('jwtToken', json);
-                                  props.history.push("/books")
+            .then((res) => { 
+                res.json()
+                .then((json) => { 
+                    if (res.status === 200) { 
+                        sessionStorage.setItem('jwtToken', json);
+                        props.history.push("/books")
+                    }
+                    else {
+                        setStatus(json.message)
+                    }
                 });
             })
             .catch((error) => console.log(error));
@@ -38,9 +46,10 @@ const Register = (props) => {
 
     return (
         <div>
-            <input key="username" type="text" onChange={handleChange} placeholder="username" name="name" />
+            <input key="username" type="text" onChange={handleChange} placeholder="username" name="username" />
             <input key="password" type="password" onChange={handleChange} placeholder="password" name="password" />
             <button key="login" onClick={handleClick} >Register</button>
+            <label>{status}</label>
         </div>
     );
 }
