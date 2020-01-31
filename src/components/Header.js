@@ -15,11 +15,17 @@ class Header extends Component {
               <div id="logo">
                 Book Barn
               </div>
-              <Link id="menuOverview" to="/" >
+              <Link id="menuOverview" to="/books" >
                 Overview
               </Link>
               <Link id="menuAdd" to="/edit/0" >
                 Add
+              </Link>
+              <Link id="menuRegister" to="/register" >
+                Register
+              </Link>
+              <Link id="menuLogout" to="/" >
+                Logout
               </Link>
             </div>
         )

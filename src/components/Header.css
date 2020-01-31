@@ -32,3 +32,20 @@
     text-decoration: none;
 }
 
+#menuRegister {
+    color: white;
+    font-size: 18pt;
+    font-weight: lighter;
+    margin-top: 35px;
+    margin-left: 40px;
+    text-decoration: none;
+}
+
+#menuLogout {
+    color: white;
+    font-size: 18pt;
+    font-weight: lighter;
+    margin-top: 35px;
+    margin-left: 40px;
+    text-decoration: none;
+}

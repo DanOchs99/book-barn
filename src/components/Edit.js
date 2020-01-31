@@ -12,7 +12,12 @@ class Edit extends Component {
         // call the server and get the book
         if (this.props.match.params.bookId > 0) {
             const detailurl = `http://localhost:8080/detail/${this.props.match.params.bookId}`
-            fetch(detailurl)
+            let token = sessionStorage.getItem('jwtToken');
+            fetch(detailurl, {
+                headers: {
+                    "authorization": token
+                }
+            })
             .then(response => { response.json()
                 .then((book) => {
                     // set the state
@@ -26,15 +31,17 @@ class Edit extends Component {
     
     handleClickSubmit = () => {
         const detailurl = `http://localhost:8080/edit/${this.state.theBook.id}`
+        let token = sessionStorage.getItem('jwtToken');
         fetch(detailurl, {
             method: 'POST',  
             body: JSON.stringify({book: this.state.theBook }),
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "authorization": token
             }
         })
         .then(() => {
-            this.props.history.push('/');
+            this.props.history.push('/books');
         })
         .catch((error) => console.log(error));
     }

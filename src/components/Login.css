@@ -1,0 +1,23 @@
+input {
+    color: black;
+    background-color: white;
+    border-color: #52A7FA;
+    border-width: 3px;
+    font-size: 22pt;
+    font-weight: bold;
+    margin-top: 4px;
+    margin-left: 40px;
+    align-self: center;
+}
+
+button {
+    color: white;
+    background-color: #52A7FA;
+    border-color: white;
+    border-width: 3px;
+    font-size: 22pt;
+    font-weight: bold;
+    margin-top: 4px;
+    margin-left: 40px;
+    align-self: center;
+}

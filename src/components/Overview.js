@@ -6,12 +6,18 @@ class App extends Component {
         // run the superclass constructor
         super(props);
         // set the initial state here
+        
         this.state = { allBooks: [], genreDropdown: [], show: "All" }
     }
-    
+
     componentDidMount() {
         // call the server and get all the books
-        fetch('http://localhost:8080')
+        let token = sessionStorage.getItem('jwtToken');
+        fetch('http://localhost:8080/books', {
+            headers: {
+                "authorization": token
+            }
+        })
         .then(response => { response.json()
             .then((books) => {
                 // build the dropdown list of genres

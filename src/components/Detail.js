@@ -11,7 +11,12 @@ class Detail extends Component {
     componentDidMount() {
         // call the server and get the book
         const detailurl = `http://localhost:8080/detail/${this.props.match.params.bookId}`
-        fetch(detailurl)
+        let token = sessionStorage.getItem('jwtToken');
+        fetch(detailurl, {
+            headers: {
+                "authorization": token
+            }
+        })
         .then(response => { response.json()
             .then((book) => {
                 // set the state
@@ -23,11 +28,13 @@ class Detail extends Component {
     }
     
     handleClickDelete = () => {
+        let token = sessionStorage.getItem('jwtToken');
         fetch("http://localhost:8080/delete", {
             method: 'POST',  
             body: JSON.stringify({book: this.state.theBook.id }),
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "authorization": token
             }
         })
         .then(() => {
