@@ -9,19 +9,28 @@ import Register from './components/Register'
 import Overview from './components/Overview'
 import Detail from './components/Detail'
 import Edit from './components/Edit'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux'
+import reducer from './reducer'
+
+const store = createStore(reducer,
+                                window.__REDUX_DEVTOOLS_EXTENSION__ &&
+                                window.__REDUX_DEVTOOLS_EXTENSION__() );
 
 ReactDOM.render(
-    <BrowserRouter>
-      <BaseLayout>
-        <Switch>
-          <Route exact path ="/" component = {Login} />
-          <Route path ="/register" component = {Register} />
-          <Route path = "/books"  component = {Overview} />
-          <Route path = "/book/:bookId" component = {Detail} />
-          <Route path = "/edit/:bookId" component = {Edit} />
-        </Switch>
-      </BaseLayout>
-    </BrowserRouter>
+    <Provider store={store} >
+      <BrowserRouter>
+        <BaseLayout>
+          <Switch>
+            <Route exact path ="/" component = {Login} />
+            <Route path ="/register" component = {Register} />
+            <Route path = "/books"  component = {Overview} />
+            <Route path = "/book/:bookId" component = {Detail} />
+            <Route path = "/edit/:bookId" component = {Edit} />
+          </Switch>
+        </BaseLayout>
+      </BrowserRouter>
+    </Provider>
     , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

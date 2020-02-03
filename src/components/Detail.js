@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Detail.css';
+import { connect } from 'react-redux';
 
 class Detail extends Component {
 
@@ -11,7 +12,10 @@ class Detail extends Component {
     componentDidMount() {
         // call the server and get the book
         const detailurl = `http://localhost:8080/detail/${this.props.match.params.bookId}`
-        let token = sessionStorage.getItem('jwtToken');
+        
+        //let token = sessionStorage.getItem('jwtToken');
+        const token = this.props.token;
+
         fetch(detailurl, {
             headers: {
                 "authorization": token
@@ -22,13 +26,20 @@ class Detail extends Component {
                 // set the state
                 this.setState({theBook: book});
             })
-            .catch((error) => console.log(error));
+            .catch((error) => { console.log(error)
+                                this.props.history.push('/');
+            });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => { console.log(error)
+                            this.props.history.push('/');
+        });
     }
     
     handleClickDelete = () => {
-        let token = sessionStorage.getItem('jwtToken');
+
+        //let token = sessionStorage.getItem('jwtToken');
+        const token = this.props.token;
+
         fetch("http://localhost:8080/delete", {
             method: 'POST',  
             body: JSON.stringify({book: this.state.theBook.id }),
@@ -40,12 +51,18 @@ class Detail extends Component {
         .then(() => {
             this.props.history.push('/');
         })
-        .catch((error) => console.log(error));
+        .catch((error) => { console.log(error)
+                            this.props.history.push('/');
+        });
     }
 
     handleClickEdit = () => {
         const editurl = `/edit/${this.state.theBook.id}`
         this.props.history.push(editurl);
+    }
+
+    handleClickAdd = () => {
+        this.props.onAddBookToCart();
     }
 
     render() {
@@ -61,10 +78,20 @@ class Detail extends Component {
                 <p>{this.state.theBook.year}</p>
                 <button onClick={this.handleClickDelete} >Delete Book</button>
                 <button onClick={this.handleClickEdit} >Edit Book</button>
+                <button onClick={this.handleClickAdd} >Add to Cart</button>
               </div>
             </div>
         );
     }
 }
 
-export default Detail;
+const mapStateToProps = (state) => {
+    return { token: state.token }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return { onAddBookToCart: () => dispatch({type: 'INCREMENT_CART'})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail)

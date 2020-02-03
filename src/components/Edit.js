@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Edit.css';
+import {connect} from 'react-redux';
 
 class Edit extends Component {
 
@@ -12,7 +13,10 @@ class Edit extends Component {
         // call the server and get the book
         if (this.props.match.params.bookId > 0) {
             const detailurl = `http://localhost:8080/detail/${this.props.match.params.bookId}`
-            let token = sessionStorage.getItem('jwtToken');
+
+            //let token = sessionStorage.getItem('jwtToken');
+            const token = this.props.token;
+            
             fetch(detailurl, {
                 headers: {
                     "authorization": token
@@ -23,15 +27,22 @@ class Edit extends Component {
                     // set the state
                     this.setState({theBook: book});
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => { console.log(error);
+                                    this.props.history.push('/');
+                });
             })
-            .catch((error) => console.log(error));
+            .catch((error) => { console.log(error)
+                                this.props.history.push('/');
+            });
         }
     }
     
     handleClickSubmit = () => {
         const detailurl = `http://localhost:8080/edit/${this.state.theBook.id}`
-        let token = sessionStorage.getItem('jwtToken');
+
+        //let token = sessionStorage.getItem('jwtToken');
+        const token = this.props.token;
+
         fetch(detailurl, {
             method: 'POST',  
             body: JSON.stringify({book: this.state.theBook }),
@@ -43,7 +54,9 @@ class Edit extends Component {
         .then(() => {
             this.props.history.push('/books');
         })
-        .catch((error) => console.log(error));
+        .catch((error) => { console.log(error)
+                            this.props.history.push('/');
+        });
     }
 
     handleEdit = (e) => {
@@ -71,4 +84,8 @@ class Edit extends Component {
     }
 }
 
-export default Edit;
+const mapStateToProps = (state) => {
+    return { token: state.token }
+}
+
+export default connect(mapStateToProps)(Edit);

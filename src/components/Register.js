@@ -1,7 +1,9 @@
 import React from 'react'
 import {useState} from 'react'
 import {useEffect} from 'react'
-import './Register.css';
+import './Register.css'
+import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const Register = (props) => {
     const [user, setUser] = useState({})
@@ -29,20 +31,27 @@ const Register = (props) => {
                 .then((json) => { 
                     if (res.status === 200) { 
                         sessionStorage.setItem('jwtToken', json);
+                        props.onLogin(json)
                         props.history.push("/books")
                     }
                     else {
                         setStatus(json.message)
+                        props.onLogout()
                     }
                 });
             })
-            .catch((error) => console.log(error));
+            .catch((error) => { console.log(error)
+                                props.onLogout()
+            });
         }
     }
 
+    const dispatch  = useDispatch()
+
     useEffect(() => {
         sessionStorage.removeItem('jwtToken');
-    }, []);
+        dispatch({type: 'ON_LOGOUT'})
+    }, [dispatch]);
 
     return (
         <div>
@@ -54,4 +63,10 @@ const Register = (props) => {
     );
 }
 
-export default Register
+const mapDispatchToProps = (dispatch) => {
+    return { onLogin: (t) => dispatch({type: 'ON_LOGIN', token: t}),
+            onLogout: () => dispatch({type: 'ON_LOGOUT'})
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Register)

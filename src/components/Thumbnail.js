@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import './Thumbnail.css';
 
 class Thumbnail extends Component {
 
     render() {
-        const detailurl = `http://localhost:3000/book/${this.props.book.id}`
+        const detailLink = `/book/${this.props.book.id}`
         return (
-            <a href={detailurl} >
+            <Link to={detailLink} >
               <img src={this.props.book.imageurl} alt={this.props.book.title} className="imageThumbnail" />
-            </a>
+            </Link>
         );
     }
 }

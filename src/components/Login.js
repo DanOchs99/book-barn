@@ -1,11 +1,13 @@
 import React from 'react'
 import {useState} from 'react'
 import {useEffect} from 'react'
-import './Login.css';
+import './Login.css'
+import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const Login = (props) => {
     const [user, setUser] = useState({})
-    const [status, setStatus] = useState('')
+    const [status, setStatus] = useState([])
 
     const handleChange = (e) => {
         setUser ({
@@ -29,20 +31,27 @@ const Login = (props) => {
                 .then((json) => { 
                     if (res.status === 200) { 
                         sessionStorage.setItem('jwtToken', json);
+                        props.onLogin(json)
                         props.history.push("/books")
                     }
                     else {
                         setStatus(json.message)
+                        props.onLogout()
                     }
                 });
             })
-            .catch((error) => console.log(error));
+            .catch((error) => { console.log(error)
+                                props.onLogout()
+            });
         }
     }
 
+    const dispatch  = useDispatch()
+
     useEffect(() => {
         sessionStorage.removeItem('jwtToken');
-    }, []);
+        dispatch({type: 'ON_LOGOUT'})
+    }, [dispatch]);
 
     return (
         <div>
@@ -54,4 +63,10 @@ const Login = (props) => {
     );
 }
 
-export default Login
+const mapDispatchToProps = (dispatch) => {
+    return { onLogin: (t) => dispatch({type: 'ON_LOGIN', token: t}),
+            onLogout: () => dispatch({type: 'ON_LOGOUT'})
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login)
