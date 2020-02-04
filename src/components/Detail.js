@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Detail.css';
 import { connect } from 'react-redux';
+import * as actionCreators from '../store/actions/cart'
 
 class Detail extends Component {
 
@@ -86,11 +87,11 @@ class Detail extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { token: state.token }
+    return { token: state.userR.token }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return { onAddBookToCart: () => dispatch({type: 'INCREMENT_CART'})
+    return { onAddBookToCart: () => dispatch(actionCreators.onIncrementCart())
     }
 }
 

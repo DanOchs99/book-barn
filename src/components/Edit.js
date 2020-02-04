@@ -85,7 +85,7 @@ class Edit extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { token: state.token }
+    return { token: state.userR.token }
 }
 
 export default connect(mapStateToProps)(Edit);

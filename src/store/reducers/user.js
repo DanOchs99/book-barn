@@ -1,25 +1,23 @@
+import * as actionTypes from '../types/user'
+
 const initialState = {
     isAuthenticated: false,
     token: '',
-    cartCount: 0
 }
 
-const reducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ON_LOGIN':
+        case actionTypes.ON_LOGIN:
             return { ...state,
                      isAuthenticated: true,
-                     token: action.token }
-        case 'ON_LOGOUT':
+                     token: action.payload.token }
+        case actionTypes.ON_LOGOUT:
             return { ...state,
                      isAuthenticated: false,
                      token: '' }
-        case 'INCREMENT_CART':
-            return { ...state,
-                     cartCount: state.cartCount + 1 }
         default:
             return state
     }
 }
 
-export default reducer
+export default userReducer

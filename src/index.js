@@ -9,13 +9,16 @@ import Register from './components/Register'
 import Overview from './components/Overview'
 import Detail from './components/Detail'
 import Edit from './components/Edit'
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux'
-import reducer from './reducer'
+import userReducer from './store/reducers/user'
+import cartReducer from './store/reducers/cart'
 
-const store = createStore(reducer,
-                                window.__REDUX_DEVTOOLS_EXTENSION__ &&
-                                window.__REDUX_DEVTOOLS_EXTENSION__() );
+const rootReducer = combineReducers({ userR: userReducer, cartR: cartReducer })
+
+const store = createStore(rootReducer,
+                          window.__REDUX_DEVTOOLS_EXTENSION__ &&
+                          window.__REDUX_DEVTOOLS_EXTENSION__() );
 
 ReactDOM.render(
     <Provider store={store} >

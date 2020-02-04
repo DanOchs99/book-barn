@@ -39,8 +39,8 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return({ isAuthenticated: state.isAuthenticated,
-             cartCount: state.cartCount })
+    return({ isAuthenticated: state.userR.isAuthenticated,
+             cartCount: state.cartR.cartCount })
 }
 
 export default connect(mapStateToProps)(Header);

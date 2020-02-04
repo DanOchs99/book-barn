@@ -4,6 +4,7 @@ import {useEffect} from 'react'
 import './Login.css'
 import { connect } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import * as actionCreators from '../store/actions/user'
 
 const Login = (props) => {
     const [user, setUser] = useState({})
@@ -64,8 +65,8 @@ const Login = (props) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return { onLogin: (t) => dispatch({type: 'ON_LOGIN', token: t}),
-            onLogout: () => dispatch({type: 'ON_LOGOUT'})
+    return { onLogin: (t) => dispatch(actionCreators.onLogin({token: t})),
+            onLogout: () => dispatch(actionCreators.onLogout())
     }
 }
 

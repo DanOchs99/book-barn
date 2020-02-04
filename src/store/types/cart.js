@@ -1,0 +1,1 @@
+export const INCREMENT_CART = 'INCREMENT_CART'
