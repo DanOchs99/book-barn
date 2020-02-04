@@ -1,15 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import Header from "./Header";
 
-class BaseLayout extends Component {
-    render() {
-        return (
-            <div>
-              <Header />
-              {this.props.children}
-            </div>
-        )
-    }
+const BaseLayout = (props) =>  {
+    return (
+           <div>
+             <Header />
+             {props.children}
+           </div>
+           );
 }
 
 export default BaseLayout

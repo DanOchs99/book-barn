@@ -1,89 +1,77 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import './Detail.css';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions/cart'
 
-class Detail extends Component {
+const Detail = (props) => {
 
-    constructor(props) {
-        super(props)
-        this.state = {theBook: ''}
-    }
+    const [theBook, setTheBook] = useState('');
 
-    componentDidMount() {
+    useEffect(() => {
         // call the server and get the book
-        const detailurl = `http://localhost:8080/detail/${this.props.match.params.bookId}`
-        
-        //let token = sessionStorage.getItem('jwtToken');
-        const token = this.props.token;
+        const detailurl = `http://localhost:8080/detail/${props.match.params.bookId}`
 
         fetch(detailurl, {
             headers: {
-                "authorization": token
+                "authorization": props.token
             }
         })
         .then(response => { response.json()
             .then((book) => {
                 // set the state
-                this.setState({theBook: book});
+                setTheBook(book);
             })
             .catch((error) => { console.log(error)
-                                this.props.history.push('/');
+                                props.history.push('/');
             });
         })
         .catch((error) => { console.log(error)
-                            this.props.history.push('/');
+                            props.history.push('/');
         });
-    }
+    }, [props.history, props.match.params.bookId, props.token]);
     
-    handleClickDelete = () => {
-
-        //let token = sessionStorage.getItem('jwtToken');
-        const token = this.props.token;
-
+    const handleClickDelete = () => {
         fetch("http://localhost:8080/delete", {
             method: 'POST',  
-            body: JSON.stringify({book: this.state.theBook.id }),
+            body: JSON.stringify({book: theBook.id }),
             headers: {
                 "Content-Type": "application/json",
-                "authorization": token
+                "authorization": props.token
             }
         })
         .then(() => {
-            this.props.history.push('/');
+            props.history.push('/');
         })
         .catch((error) => { console.log(error)
-                            this.props.history.push('/');
+                            props.history.push('/');
         });
     }
 
-    handleClickEdit = () => {
-        const editurl = `/edit/${this.state.theBook.id}`
-        this.props.history.push(editurl);
+    const handleClickEdit = () => {
+        const editurl = `/edit/${theBook.id}`
+        props.history.push(editurl);
     }
 
-    handleClickAdd = () => {
-        this.props.onAddBookToCart();
+    const handleClickAdd = () => {
+        props.onAddBookToCart();
     }
 
-    render() {
-        return (
+    return (
             <div id="grid" className="bb-detail">
               <div>
-                  <img src={this.state.theBook.imageurl} alt={this.state.theBook.title} className="bb-detail-image" />
+                  <img src={theBook.imageurl} alt={theBook.title} className="bb-detail-image" />
               </div>
               <div className="bb-detail-info">
-                <p>{this.state.theBook.title}</p>
-                <p>{this.state.theBook.genre}</p>
-                <p>{this.state.theBook.publisher}</p>
-                <p>{this.state.theBook.year}</p>
-                <button onClick={this.handleClickDelete} >Delete Book</button>
-                <button onClick={this.handleClickEdit} >Edit Book</button>
-                <button onClick={this.handleClickAdd} >Add to Cart</button>
+                <p>{theBook.title}</p>
+                <p>{theBook.genre}</p>
+                <p>{theBook.publisher}</p>
+                <p>{theBook.year}</p>
+                <button onClick={handleClickDelete} >Delete Book</button>
+                <button onClick={handleClickEdit} >Edit Book</button>
+                <button onClick={handleClickAdd} >Add to Cart</button>
               </div>
             </div>
         );
-    }
 }
 
 const mapStateToProps = (state) => {

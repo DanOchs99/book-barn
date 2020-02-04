@@ -1,9 +1,6 @@
-import React from 'react'
-import {useState} from 'react'
-import {useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './Login.css'
-import { connect } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import * as actionCreators from '../store/actions/user'
 
 const Login = (props) => {

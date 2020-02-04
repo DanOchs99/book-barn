@@ -1,25 +1,15 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from './Grid';
 import { connect } from 'react-redux';
 
-class App extends Component {
-    constructor(props) {
-        // run the superclass constructor
-        super(props);
-        // set the initial state here
-        
-        this.state = { allBooks: [], genreDropdown: [], show: "All" }
-    }
+const Overview = (props) => {
+    const [localBooks, setlocalBooks] = useState({ allBooks: [], genreDropdown: [] });
 
-    componentDidMount() {
+    useEffect(() => {
         // call the server and get all the books
-
-        //let token = sessionStorage.getItem('jwtToken');
-        const token = this.props.token;
-        
         fetch('http://localhost:8080/books', {
             headers: {
-                "authorization": token
+                "authorization": props.token
             }
         })
         .then(response => { response.json()
@@ -40,31 +30,32 @@ class App extends Component {
                     );
                 })
                 // set the state - initially show all the books
-                this.setState({allBooks: books, genreDropdown: allGenreElements, show: "All"});
+                setlocalBooks({allBooks: books, genreDropdown: allGenreElements, show: "All"});
             })
             .catch((error) => { console.log(error)
-                                this.props.history.push('/');
+                                props.history.push('/');
             });
         })
         .catch((error) => { console.log(error)
-                            this.props.history.push('/');
+                            props.history.push('/');
         });
-    }
+    },[props.history, props.token])
 
-    // arrow function provides access to this.setState
-    onDropdownSelect = (selection) => {
-        this.setState({show: selection});
-    }
+    //const onDropdownSelect = (selection) => {
+    //    setlocalBooks({show: selection});
+    //}
 
-    render() {
-        return (
-              <Grid allBooks={this.state.allBooks} show={this.state.show} genreDropdown={this.state.genreDropdown} onDropdownSelect={this.onDropdownSelect} />
-        );
-    }
+    //return (
+    //       <Grid allBooks={localBooks.allBooks} show={localBooks.show} genreDropdown={localBooks.genreDropdown} onDropdownSelect={onDropdownSelect} />
+    //       );
+
+    return (
+           <Grid allBooks={localBooks.allBooks} genreDropdown={localBooks.genreDropdown} />
+           );       
 }
 
 const mapStateToProps = (state) => {
     return { token: state.userR.token }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(Overview);
